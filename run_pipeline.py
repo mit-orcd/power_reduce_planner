@@ -29,7 +29,9 @@ from pipeline import export_timeseries
 from pipeline import plot_cabinet_bars
 from pipeline import plot_cabinet_bars_with_reduction
 from pipeline import plot_cumulative_power
+from pipeline import plot_cumulative_power_with_reduction
 from pipeline import plot_stacked_power
+from pipeline import plot_stacked_power_with_reduction
 from pipeline import select_reduction_nodes
 
 
@@ -106,8 +108,12 @@ def main() -> None:
             output_dir=args.output_dir,
         )
 
-        print(f"\n=== Step 5: cabinet bar plot with reduction ===")
+        print(f"\n=== Step 5: cabinet plots with reduction ===")
         plot_cabinet_bars_with_reduction.render(
+            args.output_dir, args.row, args.pod,
+        )
+        plot_cumulative_power_with_reduction.render(args.output_dir)
+        plot_stacked_power_with_reduction.render(
             args.output_dir, args.row, args.pod,
         )
 

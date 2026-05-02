@@ -192,6 +192,8 @@ the recomputed new max as its fifth bar.
         partition_violations.csv
         selection_summary_by_partition.csv
         cabinet_power_bars_with_reduction.png
+        cumulative_power_with_reduction.png
+        stacked_power_with_reduction.png
 
 `selected_nodes.csv` carries one row per selected host with `cabinet,
 host, peak_time, host_power_at_peak_w, ...`. `selection_summary.csv`
@@ -204,7 +206,12 @@ per-partition impact view (only partitions losing a node by default;
 `nodes / cpus / gpus / <gpu_type>` triplets `_pre / _rm / _post`; GPUs
 broken out by accelerator type from `scontrol_show_node.json`).
 `cabinet_power_bars_with_reduction.png` adds the after-reduction bars to
-the canonical 4-bar plot.
+the canonical 4-bar plot. `cumulative_power_with_reduction.png` overlays
+the after-reduction cumulative curves (dashed) on the original ones
+(solid) for direct min/median/max comparison.
+`stacked_power_with_reduction.png` stacks only the kept hosts'
+contributions per cabinet over time and overlays the original cluster
+total as a dashed black line so the removed envelope is visible.
 
 `selection_summary_by_partition.csv` is generated automatically by
 `select_reduction_nodes.py`. Re-run it standalone if you hand-edit the

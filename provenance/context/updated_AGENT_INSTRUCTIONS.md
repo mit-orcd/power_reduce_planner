@@ -87,6 +87,15 @@ relies on a new `median_power` column in `node_stats.csv`; the SQL in
 `r9_pod_a_pipeline/sql/04_node_stats.sql` was extended additively
 (existing columns unchanged).
 
+A short follow-up added the with-reduction variants of both new plots
+(`plot_cumulative_power_with_reduction.py` and
+`plot_stacked_power_with_reduction.py`); they are wired into Step 5
+alongside `plot_cabinet_bars_with_reduction.py`. The cumulative
+variant draws the original three curves (solid) plus the
+after-reduction three curves (dashed). The stacked variant stacks
+only the kept hosts and overlays the original cluster total as a
+dashed black line so the removed envelope is visible at a glance.
+
 There is **also** an older, partial implementation right here in
 `telegraf_data/` (`query_pg.py`, `plot_cabinet_bars.py`, etc.). It predates
 this spec and **does not** implement the `sys_power`-authoritative rule, does

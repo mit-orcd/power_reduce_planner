@@ -31,6 +31,8 @@ Opt-in downstream artifacts (when `--with-reduction` is set):
 | `partition_violations.csv`              | `select_reduction_nodes.py`           | per-violating-partition: `partition,partition_size,n_removed,n_remaining,floor,deficit` (header-only when feasible)                            |
 | `selection_summary_by_partition.csv`    | `summarize_by_partition.py` (auto-chained from `select_reduction_nodes.py`) | per-partition wide CSV (only partitions that lose a node, unless `--include-untouched`): `partition` plus `nodes / cpus / gpus / <gpu_type>` triplets with compact suffixes `_pre, _rm, _post`. GPU types enumerated from scontrol JSON. |
 | `cabinet_power_bars_with_reduction.png` | `plot_cabinet_bars_with_reduction.py` | 5-bars-per-cabinet PNG (the original 4 plus "inst max after reduction")                                                                        |
+| `cumulative_power_with_reduction.png`   | `plot_cumulative_power_with_reduction.py` | 6-line cumulative plot: 3 original solid (Min/Median/Max) and 3 after-reduction dashed; shaded fill under the dashed envelope |
+| `stacked_power_with_reduction.png`      | `plot_stacked_power_with_reduction.py`    | After-reduction stacked area per cabinet over time, with the original cluster total overlaid as a dashed black comparison line |
 
 
 ## Data flow
@@ -65,6 +67,12 @@ flowchart TD
     NSCSV --> PLOT2
     SELOUT --> PLOT2
     PLOT2 --> PNG2["output/cabinet_power_bars_with_reduction.png"]
+    NSCSV --> CUMRED["plot_cumulative_power_with_reduction.py"]
+    SELOUT --> CUMRED
+    CUMRED --> CUMREDPNG["output/cumulative_power_with_reduction.png"]
+    TSCSV --> STACKRED["plot_stacked_power_with_reduction.py"]
+    SELOUT --> STACKRED
+    STACKRED --> STACKREDPNG["output/stacked_power_with_reduction.png"]
 ~~~
 
 

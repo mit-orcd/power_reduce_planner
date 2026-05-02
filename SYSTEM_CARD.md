@@ -71,6 +71,13 @@ get, under `output/`:
   `nodes / cpus / gpus / <gpu_type>` triplets `_pre / _rm / _post`.
 - `cabinet_power_bars_with_reduction.png` -- 6-bar plot with
   before / after bars and a reduction-summary stats box.
+- `cumulative_power_with_reduction.png` -- 6-line cumulative plot
+  comparing the original min/median/max curves (solid) against the
+  after-reduction curves (dashed); useful for "how does the curve
+  shrink when we drop these hosts".
+- `stacked_power_with_reduction.png` -- after-reduction stacked-area
+  per cabinet over time, with the original cluster total overlaid
+  as a dashed black line; the gap is the removed power envelope.
 
 `python make_reservation.py` then emits a single
 `scontrol create reservation` command from `selected_nodes.csv`.
