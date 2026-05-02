@@ -47,16 +47,14 @@ no `__pycache__/`, no `.venv/`, no `*.pyc` leaked in -- the existing
 
 Final state:
 
-```
-commit d6bb680ec50f711db6b80bc225d9d9284d2bc606 (HEAD -> main)
-Author: Christopher <christophernhill@gmail.com>
-Date:   Sat May 2 09:03:47 2026 -0400
+    commit d6bb680ec50f711db6b80bc225d9d9284d2bc606 (HEAD -> main)
+    Author: Christopher
+    Date:   Sat May 2 09:03:47 2026 -0400
 
-    Initial import: row 9 / pod A power-reduction pipeline
-    [body listing the major pieces]
+        Initial import: row 9 / pod A power-reduction pipeline
+        [body listing the major pieces]
 
- 23 files changed, 2268 insertions(+)
-```
+     23 files changed, 2268 insertions(+)
 
 ## Known follow-ups (not done in this phase)
 

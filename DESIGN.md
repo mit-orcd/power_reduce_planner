@@ -33,33 +33,33 @@ Opt-in downstream artifacts (when `--with-reduction` is set):
 
 ## Data flow
 
-```mermaid
+~~~mermaid
 flowchart TD
-    PG[(PostgreSQL timedb)]
-    PG -->|01_dcim_nodes.sql| DCIM[output/dcim_nodes.csv]
-    PG -->|02_host_sensor_map.sql<br/>row, pod| MAP[output/host_sensor_map.csv]
-    MAP --> TS_STEP[export_timeseries.py]
-    PG -->|03_node_timeseries.sql| TS_STEP
+    PG[("PostgreSQL timedb")]
+    PG -->|"01_dcim_nodes.sql"| DCIM["output/dcim_nodes.csv"]
+    PG -->|"02_host_sensor_map.sql (row, pod)"| MAP["output/host_sensor_map.csv"]
+    MAP --> TS_STEP["export_timeseries.py"]
+    PG -->|"03_node_timeseries.sql"| TS_STEP
     TS_STEP --> TSCSV["output/timeseries/cabinet_NN/host.csv"]
-    MAP --> STATS_STEP[export_node_stats.py]
-    PG -->|04_node_stats.sql| STATS_STEP
-    STATS_STEP --> NSCSV[output/node_stats.csv]
-    TSCSV --> PLOT[plot_cabinet_bars.py]
+    MAP --> STATS_STEP["export_node_stats.py"]
+    PG -->|"04_node_stats.sql"| STATS_STEP
+    STATS_STEP --> NSCSV["output/node_stats.csv"]
+    TSCSV --> PLOT["plot_cabinet_bars.py"]
     NSCSV --> PLOT
-    PLOT --> PNG[output/cabinet_power_bars.png]
-    TSCSV --> SEL[select_reduction_nodes.py]
+    PLOT --> PNG["output/cabinet_power_bars.png"]
+    TSCSV --> SEL["select_reduction_nodes.py"]
     SCONTROL["telegraf_data/scontrol_show_node.json"] --> SEL
-    SEL --> SELOUT[output/selected_nodes.csv]
-    SEL --> SUMMARY[output/selection_summary.csv]
-    SEL --> VIOL[output/partition_violations.csv]
-    SELOUT --> BYPART[summarize_by_partition.py]
+    SEL --> SELOUT["output/selected_nodes.csv"]
+    SEL --> SUMMARY["output/selection_summary.csv"]
+    SEL --> VIOL["output/partition_violations.csv"]
+    SELOUT --> BYPART["summarize_by_partition.py"]
     SCONTROL --> BYPART
-    BYPART --> BYPARTOUT[output/selection_summary_by_partition.csv]
-    TSCSV --> PLOT2[plot_cabinet_bars_with_reduction.py]
+    BYPART --> BYPARTOUT["output/selection_summary_by_partition.csv"]
+    TSCSV --> PLOT2["plot_cabinet_bars_with_reduction.py"]
     NSCSV --> PLOT2
     SELOUT --> PLOT2
-    PLOT2 --> PNG2[output/cabinet_power_bars_with_reduction.png]
-```
+    PLOT2 --> PNG2["output/cabinet_power_bars_with_reduction.png"]
+~~~
 
 
 

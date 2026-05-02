@@ -62,12 +62,10 @@ comfortably; figure width adjusted from `max(12, 0.85*n+4)` to
 
 A monospaced text box in the upper-left of the figure renders:
 
-```
-Reduction summary (sum across N cabinets)
-  Hosts removed: <m> / <total>  (<pct>%)
-  Inst max:  <before> kW -> <after> kW   (-<pct>%)
-  Average:   <before> kW -> <after> kW   (-<pct>%)
-```
+    Reduction summary (sum across N cabinets)
+      Hosts removed: <m> / <total>  (<pct>%)
+      Inst max:  <before> kW -> <after> kW   (-<pct>%)
+      Average:   <before> kW -> <after> kW   (-<pct>%)
 
 Drawn via `ax.text(..., transform=ax.transAxes,
 bbox=dict(boxstyle="round,pad=0.4", facecolor="white", alpha=0.85,

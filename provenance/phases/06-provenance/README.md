@@ -30,16 +30,14 @@ See [`clarifications.md`](clarifications.md) for the verbatim choice and
 
 A six-phase hierarchy under `provenance/`:
 
-```text
-provenance/
-  README.md, TIMELINE.md
-  context/    -- original and updated AGENT_INSTRUCTIONS specs
-  scripts/    -- one-shot extract_session.py
-  phases/01..06/
-    README.md, plan.md, user_prompts.md, assistant_responses.md,
-    clarifications.md (when applicable),
-    decisions.md, change_requests.md (when applicable)
-```
+    provenance/
+        README.md, TIMELINE.md
+        context/    -- original and updated AGENT_INSTRUCTIONS specs
+        scripts/    -- one-shot extract_session.py
+        phases/01..06/
+            README.md, plan.md, user_prompts.md, assistant_responses.md,
+            clarifications.md (when applicable),
+            decisions.md, change_requests.md (when applicable)
 
 The extractor [`scripts/extract_session.py`](../../scripts/extract_session.py)
 is std-lib only and can be re-run any time the parent transcript is

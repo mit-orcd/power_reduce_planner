@@ -39,12 +39,10 @@ standard library only (no psycopg, matplotlib, etc.). CLI flags:
 
 Sample output (single line on stdout, pipe-clean):
 
-```text
-scontrol create reservation ReservationName=temp_power_reduce_20260510_0900_179 \
-    StartTime=2026-05-10T09:00:00 EndTime=2026-05-17T09:00:00 \
-    User=root Flags=MAINT,IGNORE_JOBS \
-    Nodes=node1603,node1604,...
-```
+    scontrol create reservation ReservationName=temp_power_reduce_20260510_0900_179 \
+        StartTime=2026-05-10T09:00:00 EndTime=2026-05-17T09:00:00 \
+        User=root Flags=MAINT,IGNORE_JOBS \
+        Nodes=node1603,node1604,...
 
 Hosts are deduplicated via `dict.fromkeys` (preserves order) then
 naturally sorted (`node3 < node10`) so the same selection produces the

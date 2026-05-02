@@ -170,9 +170,9 @@ def _format_user_prompt(idx: int, timestamp: str, body: str) -> str:
     if timestamp:
         out.append(f"_{timestamp}_")
     out.append("")
-    out.append("```")
+    out.append("~~~")
     out.append(body)
-    out.append("```")
+    out.append("~~~")
     out.append("")
     return "\n".join(out)
 

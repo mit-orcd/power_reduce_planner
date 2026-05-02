@@ -14,25 +14,25 @@ the artifacts on disk that landed in that phase.
 
 ## What happened in each phase, at a glance
 
-```mermaid
+~~~mermaid
 timeline
     title Session arc
-    Phase 01 : initial pipeline (PostgreSQL -> CSVs -> 4-bar plot)
-             : sys_power priority + host-name irregularity in one SQL
-             : reference lines added at 16.5 / 33 / 49.5 kW
-    Phase 02 : random per-cabinet selection to drop peak by 40%
-             : global Slurm partition floor with seeded retries
-             : restoration of zero-remaining partitions
-             : average-after bar + summary stats text box on plot
-    Phase 03 : standalone scontrol reservation command generator
-             : SPEC_NODES added then removed (Slurm sets it itself)
-    Phase 04 : per-partition impact CSV
-             : auto-discover GPU types from gres regex
-             : filter to non-empty rows + compact _pre/_rm/_post headers
-    Phase 05 : git init r9_pod_a_pipeline only, branch main
-             : single import commit d6bb680
-    Phase 06 : provenance subdirectory captures everything above
-```
+    Phase 01 : "initial pipeline (PostgreSQL to CSVs to 4-bar plot)"
+             : "sys_power priority + host-name irregularity in one SQL"
+             : "reference lines added at 16.5 / 33 / 49.5 kW"
+    Phase 02 : "random per-cabinet selection to drop peak by 40%"
+             : "global Slurm partition floor with seeded retries"
+             : "restoration of zero-remaining partitions"
+             : "average-after bar + summary stats text box on plot"
+    Phase 03 : "standalone scontrol reservation command generator"
+             : "SPEC_NODES added then removed (Slurm sets it itself)"
+    Phase 04 : "per-partition impact CSV"
+             : "auto-discover GPU types from gres regex"
+             : "filter to non-empty rows + compact _pre/_rm/_post headers"
+    Phase 05 : "git init r9_pod_a_pipeline only, branch main"
+             : "single import commit d6bb680"
+    Phase 06 : "provenance subdirectory captures everything above"
+~~~
 
 ## Cross-references
 
