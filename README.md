@@ -225,3 +225,12 @@ python make_reservation.py \
 | `--name` | auto: `temp_power_reduce_<YYYYMMDD>_<HHMM>_<host_count>` | full override |
 | `--user` | `root` | Slurm requires `User=` (or `Accounts=`) on a reservation |
 | `--output-script` | (none) | optional path to write an executable `sh` script wrapping the command |
+
+## Session provenance
+
+The `provenance/` subdirectory captures the entire agentic session that
+produced this code: the original spec, every formal plan verbatim, every
+verbatim user prompt, every visible assistant response, the AskQuestion
+clarifications and user selections, plus distilled per-phase decisions
+and narratives. Start at [`provenance/TIMELINE.md`](provenance/TIMELINE.md)
+or [`provenance/README.md`](provenance/README.md) for navigation.

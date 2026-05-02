@@ -1,5 +1,9 @@
 # Design notes (architect role)
 
+> Session provenance (plans, prompts, decisions, narrative for every phase
+> that produced this code) lives under [`provenance/`](provenance/);
+> start at [`provenance/TIMELINE.md`](provenance/TIMELINE.md).
+
 ## What the pipeline produces
 
 For a given `(row, pod)` selection of compute nodes in the datacenter, the
