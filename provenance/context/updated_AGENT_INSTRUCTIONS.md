@@ -62,6 +62,31 @@ auto-generated alongside the other CSVs and also runnable standalone via
 `pipeline/summarize_by_partition.py`),
 `cabinet_power_bars_with_reduction.png`.
 
+### Self-contained snapshot of `scontrol_show_node.json`
+
+As of May 2 2026 the `r9_pod_a_pipeline/` repo ships a gzipped copy of
+this directory's `scontrol_show_node.json` at
+`r9_pod_a_pipeline/data/scontrol_show_node.json.gz` (~86 KB compressed;
+~46x compression of the 4 MB original). The pipeline's gzip-aware loader
+accepts either `.json` or `.json.gz`. Live code paths in
+`r9_pod_a_pipeline/` no longer reach into `telegraf_data/`. If you
+refresh this directory's `scontrol_show_node.json` you should also
+re-gzip it into the repo (`gzip -9 -c <path>/scontrol_show_node.json >
+r9_pod_a_pipeline/data/scontrol_show_node.json.gz`) so the snapshot
+stays current.
+
+### New canonical plots (May 2 2026)
+
+The repo gained two new plot stages:
+`r9_pod_a_pipeline/pipeline/plot_cumulative_power.py` (per-host
+min/median/max sorted independently and cumulated) and
+`r9_pod_a_pipeline/pipeline/plot_stacked_power.py` (total power over
+time, stacked by cabinet). They are wired into `run_pipeline.py` Step
+3 alongside the existing `plot_cabinet_bars.py`. The cumulative plot
+relies on a new `median_power` column in `node_stats.csv`; the SQL in
+`r9_pod_a_pipeline/sql/04_node_stats.sql` was extended additively
+(existing columns unchanged).
+
 There is **also** an older, partial implementation right here in
 `telegraf_data/` (`query_pg.py`, `plot_cabinet_bars.py`, etc.). It predates
 this spec and **does not** implement the `sys_power`-authoritative rule, does

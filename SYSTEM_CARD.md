@@ -56,6 +56,13 @@ get, under `output/`:
   time-series (default 10-minute buckets).
 - `cabinet_power_bars.png` -- 4-bar-per-cabinet plot with reference
   lines at 16.5 / 33 / 49.5 kW.
+- `cumulative_power.png` -- per-host min / median / max sorted
+  independently and cumulated over the host count; useful for
+  "what's the cluster total if I keep only the lowest-N hosts" sort
+  of questions.
+- `stacked_power.png` -- stacked-area chart of total power over time,
+  broken out by cabinet; useful for spotting which cabinets drive
+  cluster-wide peaks.
 - `selected_nodes.csv` and `selection_summary.csv` -- the reduction
   selection, with both at-peak and recomputed-new-max metrics.
 - `partition_violations.csv` -- partitions still below floor after
@@ -93,6 +100,22 @@ projects:
   [`pipeline/summarize_by_partition.py`](pipeline/summarize_by_partition.py)
   -- a regex over the Slurm `gres` string surfaces every accelerator
   type that exists in the cluster.
+- **Cumulative-by-rank visualization** in
+  [`pipeline/plot_cumulative_power.py`](pipeline/plot_cumulative_power.py)
+  -- sorts each per-host stat independently then `cumsum`s; useful
+  for any per-entity stat where you want to see "how much does the
+  total grow as I add the next-best entity?".
+- **Per-cabinet stacked-area-over-time visualization** in
+  [`pipeline/plot_stacked_power.py`](pipeline/plot_stacked_power.py)
+  -- aggregates per group at each timestamp, fills missing cells
+  with zeros, stacks via `matplotlib.pyplot.stackplot`. Generic for
+  any "group x time" view of an additive metric.
+- **Gzip-aware JSON snapshot loader** -- a 3-line `_open_scontrol`
+  helper inside `select_reduction_nodes.py` and
+  `summarize_by_partition.py` that auto-detects `.gz` and falls
+  through to plain `open()` otherwise; lets the repo ship a 86 KB
+  compressed snapshot in `data/` while keeping the file
+  hand-editable when uncompressed.
 
 ## Patterns demonstrated
 
@@ -158,9 +181,6 @@ Fixed schemas this code expects:
   user-specified primitive; deterministic with a seed.
 - **One cluster's host-name irregularity is hard-coded** in the
   `split_part` rule. Other clusters may need a different rule.
-- **External runtime dependency** on
-  `../telegraf_data/scontrol_show_node.json` until that file is moved
-  into the repo or `--scontrol-json PATH` is passed at every invocation.
 - **No xlsx / parquet / pandas dataframe output.** CSV only.
 
 ## Adaptation guide
@@ -181,6 +201,9 @@ Common forks, each with the specific file to edit:
   the JSON snapshot.
 - **Other time bucket** -- pass `--bucket 5m` (or any TimescaleDB
   interval string).
+- **Different plot styles** -- copy `pipeline/plot_cumulative_power.py`
+  or `pipeline/plot_stacked_power.py` and edit; both are
+  ~100-line standalone scripts that read existing CSVs.
 
 ## License and attribution
 

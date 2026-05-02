@@ -9,6 +9,7 @@ SELECT
     i.host                                            AS host,
     MIN(i.value)                                      AS min_power,
     AVG(i.value)                                      AS avg_power,
+    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY i.value) AS median_power,
     MAX(i.value)                                      AS max_power,
     COUNT(*)                                          AS sample_count
 FROM telegraf.ipmi_sensor i

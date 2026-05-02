@@ -10,7 +10,8 @@ the artifacts on disk that landed in that phase.
 | 03 | [Reservation generator](phases/03-reservation-generator/) | Sat 06:42 - 06:54 | indices 9-13 (5 prompts) | `slurm_reservation_generator_ea0910d3.plan.md` | `make_reservation.py` (standalone) |
 | 04 | [Partition impact summary](phases/04-partition-summary/) | Sat 08:16 - 08:53 | indices 14-17 (4 prompts) | `partition_impact_summary_11bf9529.plan.md` | `pipeline/summarize_by_partition.py`, auto-call from `select_reduction_nodes.run()`, `output/selection_summary_by_partition.csv` |
 | 05 | [Git repo init](phases/05-git-repo-init/) | Sat 08:53 - 09:10 | indices 18-21 (4 prompts) | `init_r9_pipeline_git_repo_11e69107.plan.md` | `.git/` and root commit `d6bb680` on branch `main` |
-| 06 | [Provenance subdirectory](phases/06-provenance/) | Sat 09:10+ | indices 22+ (open-ended) | `provenance_subdirectory_c4417ba1.plan.md` | this directory |
+| 06 | [Provenance subdirectory](phases/06-provenance/) | Sat 09:10 - 10:48 | indices 22-29 (8 prompts) | `provenance_subdirectory_c4417ba1.plan.md` | the `provenance/` directory itself, plus three subsequent commits done in the same span (rules+sweep, master AGENTS.md, SYSTEM_CARD+LICENSE) that share Phase 06's prompt range |
+| 07 | [Self-containment + new plots](phases/07-self-containment-plus-plots/) | Sat 15:06+ | indices 30+ (2 prompts) | `self-contain_plus_new_plots_8ed9167e.plan.md` | `data/scontrol_show_node.json.gz`, `pipeline/plot_cumulative_power.py`, `pipeline/plot_stacked_power.py`, `median_power` column, multi-plot Step 3 |
 
 ## What happened in each phase, at a glance
 
@@ -32,6 +33,11 @@ timeline
     Phase 05 : "git init r9_pod_a_pipeline only, branch main"
              : "single import commit d6bb680"
     Phase 06 : "provenance subdirectory captures everything above"
+             : "agent-rules + AGENTS.md as canonical entry point"
+             : "SYSTEM_CARD.md and MIT LICENSE"
+    Phase 07 : "ship gzipped scontrol snapshot, gzip-aware loader"
+             : "cumulative-power and stacked-power plots reimplemented"
+             : "median_power added to node_stats; multi-plot Step 3"
 ~~~
 
 ## Cross-references

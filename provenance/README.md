@@ -32,6 +32,7 @@ The directory tree, with one-line annotations:
             04-partition-summary/
             05-git-repo-init/
             06-provenance/
+            07-self-containment-plus-plots/
 
 Each phase directory contains:
 

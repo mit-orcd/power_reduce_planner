@@ -27,17 +27,18 @@ In this repo:
   `plot_cabinet_bars_with_reduction.py`);
 - the standalone reservation generator (`make_reservation.py`);
 - the agent-rules under [`agent-rules/`](agent-rules/);
-- the session provenance under [`provenance/`](provenance/).
+- the session provenance under [`provenance/`](provenance/);
+- the bundled Slurm partition snapshot under [`data/`](data/)
+  (`scontrol_show_node.json.gz`, ~86 KB compressed; the gzip-aware
+  loader in `pipeline/` accepts the `.gz` form by default and
+  transparently falls through to plain `.json`).
 
 Not in this repo (kept in adjacent directories of the surrounding
 `power-work-r9/` workspace):
 
 - `telegraf_data/` -- legacy / experimental scripts that predate this
-  repo; read-only reference. The pipeline does have **one** runtime
-  dependency on the file `../telegraf_data/scontrol_show_node.json`
-  (Slurm partition / cpu / gres data) reached via the relative path; if
-  you clone this repo elsewhere, supply that file or pass
-  `--scontrol-json PATH`.
+  repo; read-only reference. No live code path in this repo depends
+  on it now.
 - `monitoring/`, `node_users/` -- unrelated experimental subdirectories
   in the surrounding workspace.
 

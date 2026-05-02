@@ -53,12 +53,13 @@ TRANSCRIPT = (
 # Phase boundaries are user-message indices (0-based, inclusive). The last
 # tuple element is the inclusive end index, or None for "to end of transcript".
 PHASES: list[tuple[str, int, int | None]] = [
-    ("01-pipeline-bootstrap",     0,  4),
-    ("02-reduction-selection",    5,  8),
-    ("03-reservation-generator",  9, 13),
-    ("04-partition-summary",     14, 17),
-    ("05-git-repo-init",         18, 21),
-    ("06-provenance",            22, None),
+    ("01-pipeline-bootstrap",          0,  4),
+    ("02-reduction-selection",         5,  8),
+    ("03-reservation-generator",       9, 13),
+    ("04-partition-summary",          14, 17),
+    ("05-git-repo-init",              18, 21),
+    ("06-provenance",                 22, 29),
+    ("07-self-containment-plus-plots", 30, None),
 ]
 
 # The transcript does NOT preserve the user's AskQuestion selections (they
@@ -80,6 +81,12 @@ KNOWN_ANSWERS: dict[str, str] = {
         "(no option selected; user clarified separately that the request "
         "was actually about r9_pod_a_pipeline/ only)",
     "06-provenance:depth":            "full_log",
+    "07-self-containment-plus-plots:scontrol_location":
+        "data_subdir (with the user-typed addendum: 'Put the data in "
+        "data/scontrol_show_node.json but compress it with gzip and "
+        "have the read stage able to ingest either compressed or "
+        "uncompressed.')",
+    "07-self-containment-plus-plots:median_for_cumulative": "add_median",
 }
 
 # Tags that wrap or precede the actual prompt text in the transcript. We

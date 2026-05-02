@@ -17,7 +17,7 @@ total stays as `gpus_pre / gpus_rm / gpus_post`.
 
 Inputs:
   output/selected_nodes.csv                (which hosts are removed)
-  ../telegraf_data/scontrol_show_node.json (cpus + gres + partitions per node)
+  data/scontrol_show_node.json[.gz]        (cpus + gres + partitions per node)
 
 Output:
   output/selection_summary_by_partition.csv
@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import gzip
 import json
 import os
 import re
@@ -42,8 +43,8 @@ DEFAULT_SELECTED_CSV = os.path.join(REPO_DIR, "output", "selected_nodes.csv")
 DEFAULT_OUTPUT_CSV = os.path.join(
     REPO_DIR, "output", "selection_summary_by_partition.csv",
 )
-DEFAULT_SCONTROL_JSON = os.path.normpath(
-    os.path.join(REPO_DIR, "..", "telegraf_data", "scontrol_show_node.json")
+DEFAULT_SCONTROL_JSON = os.path.join(
+    REPO_DIR, "data", "scontrol_show_node.json.gz"
 )
 
 # Captures both `gpu:h100:4` (typed) and `gpu:4` (untyped). Group 1 is the
@@ -66,13 +67,20 @@ def parse_gres(gres: str | None) -> dict[str, int]:
     return dict(out)
 
 
+def _open_scontrol(path: str):
+    """Open scontrol_show_node.json{,.gz}; gzip auto-detected by extension."""
+    if path.endswith(".gz"):
+        return gzip.open(path, "rt")
+    return open(path)
+
+
 def load_nodes(scontrol_path: str) -> tuple[dict[str, dict], list[str]]:
     """Return ({node_name: {cpus, gpus_by_type, partitions}}, sorted_gpu_types).
 
     sorted_gpu_types is the global alphabetical list of GPU types observed
     anywhere in the JSON, used to build the per-type CSV columns.
     """
-    with open(scontrol_path) as f:
+    with _open_scontrol(scontrol_path) as f:
         data = json.load(f)
     nodes: dict[str, dict] = {}
     seen_types: set[str] = set()
@@ -226,7 +234,7 @@ def main() -> None:
     parser.add_argument("--selected-csv", default=DEFAULT_SELECTED_CSV,
                         help="path to selected_nodes.csv")
     parser.add_argument("--scontrol-json", default=DEFAULT_SCONTROL_JSON,
-                        help="path to scontrol_show_node.json")
+                        help="path to scontrol_show_node.json (or .json.gz)")
     parser.add_argument("--output", default=DEFAULT_OUTPUT_CSV,
                         help="output CSV path")
     parser.add_argument("--include-untouched", action="store_true",

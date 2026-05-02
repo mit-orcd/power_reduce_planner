@@ -1,6 +1,6 @@
 # User prompts for 06-provenance
 
-Extracted from transcript `fec1d6d6-3e05-4db6-99ec-6d712cea59ee.jsonl`. User-message indices 22 through 25.
+Extracted from transcript `fec1d6d6-3e05-4db6-99ec-6d712cea59ee.jsonl`. User-message indices 22 through 29.
 
 ## User prompt #22
 _Saturday, May 2, 2026, 9:10 AM (UTC-4)_
@@ -34,5 +34,42 @@ _Saturday, May 2, 2026, 10:07 AM (UTC-4)_
 
 ~~~
 Now copy the files RULES_FOR_MDR_MARKDOWN.md and MERMAID_DIAGRAM_RULES.md to the repo. Put them in a spot that future agents will know to look at them. Look at the rules for markdown and diagrams in the files and make sure that all repo content is following the rules and update as needed.
+~~~
+
+## User prompt #26
+_Saturday, May 2, 2026, 10:24 AM (UTC-4)_
+
+~~~
+Now make a plan to ensure there is a master document for any future agent that explains where to find all the information it might need to understand any rules and how to understand the project scope and purpose. This should be a shart and succinct as possible (but no shorter) and have an explicit last updated date included.
+~~~
+
+## User prompt #27
+_Saturday, May 2, 2026, 10:34 AM (UTC-4)_
+
+~~~
+Make a detailed ant thoughtful plan for writing and continually maintaining a SYSTEM_CARD.md file that provides
+agents or humans looking for tooling they can use or adapt a sense of what this body of code 
+is useful for and could be adopted or adapted toward. The code will be published under and MIT license and COPYRIGHT so that it could be the basis for other work or simply help ideation. The system card should help
+with meta work that is looking for relevant tooling and examples.
+~~~
+
+## User prompt #28
+_Saturday, May 2, 2026, 10:48 AM (UTC-4)_
+
+~~~
+# Why a SYSTEM_CARD.md (and how it differs from the docs that already exist)
+
+Implement the plan as specified, it is attached for your reference. Do NOT edit the plan file itself.
+
+To-do's from the plan have already been created. Do not create them again. Mark them as in_progress as you work, starting with the first one. Don't stop until you have completed all the to-dos.
+~~~
+
+## User prompt #29
+_Saturday, May 2, 2026, 3:06 PM (UTC-4)_
+
+~~~
+Implement the plan as specified, it is attached for your reference. Do NOT edit the plan file itself.
+
+To-do's from the plan have already been created. Do not create them again. Mark them as in_progress as you work, starting with the first one. Don't stop until you have completed all the to-dos.
 ~~~
 

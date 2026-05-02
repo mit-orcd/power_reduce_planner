@@ -11,3 +11,21 @@ Each entry shows the question, the offered options, and the user's selection. Us
 
 **User answer:** full_log
 
+## Clarification #2
+### Question `copyright_holder`: Who should be named as the copyright holder in SYSTEM_CARD.md (and in any LICENSE file)?
+
+- **christopher_hill**: Christopher N. Hill (the git author identity christophernhill@gmail.com)
+- **mit**: Massachusetts Institute of Technology (consistent with the mit_* Slurm partitions and the MGHPCC context the data implies)
+- **mit_and_chnh**: Both: 'Christopher N. Hill / Massachusetts Institute of Technology' as joint copyright
+- **other_specify**: Something else - I'll specify in a follow-up message; assume placeholder '<COPYRIGHT_HOLDER>' for the plan
+
+**User answer:** (not recorded; transcript does not preserve AskQuestion responses)
+
+### Question `license_file`: Should this same plan also create a real LICENSE file (so the MIT license actually applies), or is the plan strictly about SYSTEM_CARD.md and LICENSE comes later?
+
+- **include_license**: Include both: write SYSTEM_CARD.md and a standard MIT LICENSE file with the chosen copyright holder + year 2026 in this same plan
+- **system_card_only**: Just SYSTEM_CARD.md for now; LICENSE is a follow-up
+- **license_placeholder**: Create a LICENSE file with a TODO placeholder that points back to SYSTEM_CARD.md so the intent is recorded but the legal text waits for a confirmed copyright holder
+
+**User answer:** (not recorded; transcript does not preserve AskQuestion responses)
+

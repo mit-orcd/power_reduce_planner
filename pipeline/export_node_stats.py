@@ -16,7 +16,8 @@ from config import add_common_args, args_from_namespace
 from pg_client import connect, read_sql
 
 
-COLUMNS = ("host", "min_power", "avg_power", "max_power", "sample_count")
+COLUMNS = ("host", "min_power", "avg_power", "median_power", "max_power",
+           "sample_count")
 
 
 def _load_pairs(output_dir: str) -> list[tuple[str, str]]:

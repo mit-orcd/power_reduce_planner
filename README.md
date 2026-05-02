@@ -62,11 +62,17 @@ CLI flags accepted by every script: `--row`, `--pod`, `--start`, `--end`,
                 node3001.csv
             cabinet_03/
         cabinet_power_bars.png
+        cumulative_power.png
+        stacked_power.png
 
 `dcim_nodes.csv` has columns `name, row, pod, rack`. `host_sensor_map.csv`
 has `host, rack, preferred_sensor`. `node_stats.csv` has `host,
-min_power, avg_power, max_power, sample_count`. Each per-host CSV under
-`timeseries/cabinet_NN/` has `time, power_watts` at 10-minute buckets.
+min_power, avg_power, median_power, max_power, sample_count`. Each
+per-host CSV under `timeseries/cabinet_NN/` has `time, power_watts` at
+10-minute buckets. The canonical run produces three plots: the
+4-bar-per-cabinet `cabinet_power_bars.png`, the
+independently-sorted-cumulative `cumulative_power.png`, and the
+per-cabinet stacked-area `stacked_power.png`.
 
 ## How the four bars are computed
 
@@ -115,6 +121,18 @@ single-node example query
 [`telegraf_data/example_node_ts_query.sql`](../telegraf_data/example_node_ts_query.sql).
 The legend on `cabinet_power_bars.png` should show four bars per cabinet
 in the order min / avg / max / potential.
+
+**The bundled `data/scontrol_show_node.json.gz` round-trips cleanly:**
+
+    gunzip -c data/scontrol_show_node.json.gz | python -c \
+        "import json, sys; d = json.load(sys.stdin); print(len(d['nodes']))"
+
+should print `1404` (the node count in the snapshot). The gzip-aware
+loader inside `pipeline/select_reduction_nodes.py` and
+`pipeline/summarize_by_partition.py` accepts either `.json` or
+`.json.gz` -- a developer who wants a hand-editable copy can `gunzip
+data/scontrol_show_node.json.gz` and the loader keeps working without
+code changes.
 
 ## Reduction selection (downstream, opt-in)
 

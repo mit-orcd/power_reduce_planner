@@ -10,7 +10,8 @@ violations is accepted; otherwise the lowest-violation attempt wins
 
 Inputs:
   output/timeseries/cabinet_NN/<host>.csv  (from export_timeseries.py)
-  --scontrol-json  (defaults to ../telegraf_data/scontrol_show_node.json)
+  --scontrol-json  (defaults to data/scontrol_show_node.json.gz; gzip
+                    auto-detected by extension, plain .json also accepted)
 
 Outputs (all under --output-dir):
   selected_nodes.csv
@@ -23,6 +24,7 @@ from __future__ import annotations
 import argparse
 import csv
 import glob
+import gzip
 import json
 import os
 import random
@@ -38,8 +40,8 @@ from config import add_common_args, args_from_namespace, REPO_DIR
 DEFAULT_REDUCTION_FRACTION = 0.4
 DEFAULT_MAX_ATTEMPTS = 100
 DEFAULT_SEED_BASE = 0
-DEFAULT_SCONTROL_JSON = os.path.normpath(
-    os.path.join(REPO_DIR, "..", "telegraf_data", "scontrol_show_node.json")
+DEFAULT_SCONTROL_JSON = os.path.join(
+    REPO_DIR, "data", "scontrol_show_node.json.gz"
 )
 
 
@@ -94,9 +96,16 @@ def cabinet_inst_max_after(host_readings: dict[str, dict[str, float]],
     return max(totals.values()) if totals else 0.0
 
 
+def _open_scontrol(path: str):
+    """Open scontrol_show_node.json{,.gz}; gzip auto-detected by extension."""
+    if path.endswith(".gz"):
+        return gzip.open(path, "rt")
+    return open(path)
+
+
 def load_partitions(scontrol_path: str) -> dict[str, list[str]]:
     """Return {partition: [node_name, ...]} from scontrol_show_node.json."""
-    with open(scontrol_path) as f:
+    with _open_scontrol(scontrol_path) as f:
         data = json.load(f)
     partitions: dict[str, list[str]] = defaultdict(list)
     for node in data.get("nodes", []):
@@ -385,7 +394,7 @@ def main() -> None:
                         help="seed for attempt 0; attempt i uses seed_base+i")
     parser.add_argument("--scontrol-json",
                         default=DEFAULT_SCONTROL_JSON,
-                        help="path to scontrol_show_node.json")
+                        help="path to scontrol_show_node.json (or .json.gz)")
     ns = parser.parse_args()
     args = args_from_namespace(ns)
     print("Selecting reduction nodes...")

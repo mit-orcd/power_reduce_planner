@@ -28,6 +28,8 @@ from pipeline import export_node_stats
 from pipeline import export_timeseries
 from pipeline import plot_cabinet_bars
 from pipeline import plot_cabinet_bars_with_reduction
+from pipeline import plot_cumulative_power
+from pipeline import plot_stacked_power
 from pipeline import select_reduction_nodes
 
 
@@ -64,7 +66,8 @@ def main() -> None:
     parser.add_argument(
         "--scontrol-json",
         default=select_reduction_nodes.DEFAULT_SCONTROL_JSON,
-        help="path to scontrol_show_node.json",
+        help="path to scontrol_show_node.json (or .json.gz; gzip "
+             "auto-detected by extension)",
     )
     ns = parser.parse_args()
     args = args_from_namespace(ns)
@@ -88,8 +91,10 @@ def main() -> None:
     else:
         print("--skip-export set: re-using existing CSVs in", args.output_dir)
 
-    print(f"\n=== Step 3: cabinet bar plot ===")
+    print(f"\n=== Step 3: cabinet plots ===")
     plot_cabinet_bars.render(args.output_dir, args.row, args.pod)
+    plot_cumulative_power.render(args.output_dir)
+    plot_stacked_power.render(args.output_dir, args.row, args.pod)
 
     if ns.with_reduction:
         print(f"\n=== Step 4: reduction-node selection ===")

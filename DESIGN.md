@@ -17,6 +17,8 @@ pipeline emits five artifacts under `output/`:
 | `timeseries/cabinet_NN/<host>.csv` | `export_timeseries.py`      | `time,power_watts` rows, one CSV per host                                   |
 | `node_stats.csv`                   | `export_node_stats.py`      | per-host `min/avg/max` of raw samples                                       |
 | `cabinet_power_bars.png`           | `plot_cabinet_bars.py`      | 4-bars-per-cabinet PNG                                                      |
+| `cumulative_power.png`             | `plot_cumulative_power.py`  | independently-sorted cumulative min/median/max curves over host count       |
+| `stacked_power.png`                | `plot_stacked_power.py`     | stacked-area chart of total power over time, broken out by cabinet          |
 
 
 Opt-in downstream artifacts (when `--with-reduction` is set):
@@ -47,8 +49,12 @@ flowchart TD
     TSCSV --> PLOT["plot_cabinet_bars.py"]
     NSCSV --> PLOT
     PLOT --> PNG["output/cabinet_power_bars.png"]
+    NSCSV --> CUMPLOT["plot_cumulative_power.py"]
+    CUMPLOT --> CUMPNG["output/cumulative_power.png"]
+    TSCSV --> STACK["plot_stacked_power.py"]
+    STACK --> STACKPNG["output/stacked_power.png"]
     TSCSV --> SEL["select_reduction_nodes.py"]
-    SCONTROL["telegraf_data/scontrol_show_node.json"] --> SEL
+    SCONTROL["data/scontrol_show_node.json.gz"] --> SEL
     SEL --> SELOUT["output/selected_nodes.csv"]
     SEL --> SUMMARY["output/selection_summary.csv"]
     SEL --> VIOL["output/partition_violations.csv"]
@@ -92,7 +98,7 @@ also accepted by `run_pipeline.py` when `--with-reduction` is set):
 | `--reduction-fraction` | `0.4`                                      | per-cabinet at-peak-power removal target                                     |
 | `--max-attempts`       | `100`                                      | seeded shuffle budget; the first attempt with zero partition violations wins |
 | `--seed-base`          | `0`                                        | attempt `i` uses `random.Random(seed_base + i)`                              |
-| `--scontrol-json`      | `../telegraf_data/scontrol_show_node.json` | source of partition membership                                               |
+| `--scontrol-json`      | `data/scontrol_show_node.json.gz` (in-repo; gzip auto-detected by extension, plain `.json` also accepted) | source of partition membership |
 
 
 ### Intentionally NOT a CLI flag
