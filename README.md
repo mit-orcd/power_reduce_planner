@@ -246,3 +246,9 @@ or [`provenance/README.md`](provenance/README.md) for navigation.
 When modifying any markdown in this repo, follow
 [`AGENTS.md`](AGENTS.md), which points to the rule files under
 [`agent-rules/`](agent-rules/).
+
+## License
+
+Released under the MIT License -- see [`LICENSE`](LICENSE) and
+[`SYSTEM_CARD.md`](SYSTEM_CARD.md) for an outside-evaluator overview of
+what the code does, which pieces are reusable, and how to adapt it.

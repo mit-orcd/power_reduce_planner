@@ -49,6 +49,8 @@ If you want to know X, read Y:
 | --- | --- |
 | What this code does and how to run it | [`README.md`](README.md) |
 | Why it is structured this way; parameter surface; data flow diagram | [`DESIGN.md`](DESIGN.md) |
+| Outside-evaluator overview: capabilities, reusable parts, adaptation guide | [`SYSTEM_CARD.md`](SYSTEM_CARD.md) |
+| License terms (MIT) | [`LICENSE`](LICENSE) |
 | Markdown / Mermaid authoring rules used in this repo | [`agent-rules/RULES_FOR_MDR_MARKDOWN.md`](agent-rules/RULES_FOR_MDR_MARKDOWN.md), [`agent-rules/MERMAID_DIAGRAM_RULES.md`](agent-rules/MERMAID_DIAGRAM_RULES.md) |
 | The original problem statement that started everything | [`provenance/context/original_AGENT_INSTRUCTIONS.md`](provenance/context/original_AGENT_INSTRUCTIONS.md) |
 | Chronological session history (plans + prompts + decisions per phase) | [`provenance/TIMELINE.md`](provenance/TIMELINE.md) and [`provenance/README.md`](provenance/README.md) |
