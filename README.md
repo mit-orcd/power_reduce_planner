@@ -1,5 +1,8 @@
 # r9_pod_a_pipeline
 
+> **New here?** Start with [`AGENTS.md`](AGENTS.md) for project purpose,
+> the navigation map to every other document, and the authoring rules.
+
 Spec-compliant power-analysis pipeline for the row 9 / pod A section of the
 HPC cluster. Implements the three tasks in
 [`telegraf_data/AGENT_INSTRUCTIONS.md`](../telegraf_data/AGENT_INSTRUCTIONS.md):

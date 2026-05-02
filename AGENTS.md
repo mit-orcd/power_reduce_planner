@@ -1,22 +1,68 @@
 # AGENTS.md
 
-Authoring rules for any AI agent (or human) modifying markdown in this
-repository. Read these before editing or adding any `.md` file.
+Single entry point for any AI agent (or human) working in this repository.
+Read this first; the navigation map below points at every other document
+of record. Update this file whenever you change something it points at.
 
-## Required reading
+## Purpose
 
-- [`agent-rules/RULES_FOR_MDR_MARKDOWN.md`](agent-rules/RULES_FOR_MDR_MARKDOWN.md)
-  -- 9 rules for writing markdown that renders correctly under the `mdr`
-  viewer (works around mdr issue 30 and other fence-rendering bugs).
-- [`agent-rules/MERMAID_DIAGRAM_RULES.md`](agent-rules/MERMAID_DIAGRAM_RULES.md)
-  -- Mermaid syntax rules and a checking procedure derived from real bugs
-  in adjacent repositories.
+`r9_pod_a_pipeline` is a spec-compliant power-analysis pipeline for the
+row 9 / pod A section of an HPC cluster, plus an opt-in downstream
+toolchain (random-selection-based reduction, partition-impact summary,
+Slurm reservation generator) built on top of it. It implements the
+three-task spec in
+[`../telegraf_data/AGENT_INSTRUCTIONS.md`](../telegraf_data/AGENT_INSTRUCTIONS.md)
+(in-repo snapshot:
+[`provenance/context/original_AGENT_INSTRUCTIONS.md`](provenance/context/original_AGENT_INSTRUCTIONS.md)).
 
-## Quick summary
+## Scope
 
-The big ones (full text in the rules files):
+In this repo:
 
-- Use tilde fences `~~~`, never backticks. No language hints.
+- the four-stage SQL + Python pipeline that exports `dcim_nodes`, picks
+  the preferred power sensor per host (`sys_power`-authoritative), pulls
+  per-host bucketed time-series, and renders a 4-bar-per-cabinet plot;
+- the opt-in reduction stage (`select_reduction_nodes.py`,
+  `summarize_by_partition.py`,
+  `plot_cabinet_bars_with_reduction.py`);
+- the standalone reservation generator (`make_reservation.py`);
+- the agent-rules under [`agent-rules/`](agent-rules/);
+- the session provenance under [`provenance/`](provenance/).
+
+Not in this repo (kept in adjacent directories of the surrounding
+`power-work-r9/` workspace):
+
+- `telegraf_data/` -- legacy / experimental scripts that predate this
+  repo; read-only reference. The pipeline does have **one** runtime
+  dependency on the file `../telegraf_data/scontrol_show_node.json`
+  (Slurm partition / cpu / gres data) reached via the relative path; if
+  you clone this repo elsewhere, supply that file or pass
+  `--scontrol-json PATH`.
+- `monitoring/`, `node_users/` -- unrelated experimental subdirectories
+  in the surrounding workspace.
+
+## Navigation map
+
+If you want to know X, read Y:
+
+| Want | Read |
+| --- | --- |
+| What this code does and how to run it | [`README.md`](README.md) |
+| Why it is structured this way; parameter surface; data flow diagram | [`DESIGN.md`](DESIGN.md) |
+| Markdown / Mermaid authoring rules used in this repo | [`agent-rules/RULES_FOR_MDR_MARKDOWN.md`](agent-rules/RULES_FOR_MDR_MARKDOWN.md), [`agent-rules/MERMAID_DIAGRAM_RULES.md`](agent-rules/MERMAID_DIAGRAM_RULES.md) |
+| The original problem statement that started everything | [`provenance/context/original_AGENT_INSTRUCTIONS.md`](provenance/context/original_AGENT_INSTRUCTIONS.md) |
+| Chronological session history (plans + prompts + decisions per phase) | [`provenance/TIMELINE.md`](provenance/TIMELINE.md) and [`provenance/README.md`](provenance/README.md) |
+| SQL queries (postgresql; sys_power priority + host-name irregularity encoded here) | [`sql/`](sql/) |
+| Python pipeline stages (one file per export / plot / select step) | [`pipeline/`](pipeline/) |
+| Top-level orchestrator | [`run_pipeline.py`](run_pipeline.py) |
+| Standalone reservation generator | [`make_reservation.py`](make_reservation.py) |
+
+## Authoring rules at a glance
+
+Full text in [`agent-rules/`](agent-rules/). The big ones:
+
+- Use tilde fences `~~~`, never backticks. No language hints (one
+  exception: keep `~~~mermaid` so renderers parse the diagram).
 - Use 4-space indented blocks for SQL, JSON, file trees, and shell
   command listings.
 - No `---` horizontal rules. Use numbered `##` headings instead.
@@ -27,24 +73,31 @@ The big ones (full text in the rules files):
   labels containing parentheses / colons / forward slashes, give every
   subgraph an explicit ID.
 
-## Scope of compliance in this repo
+## Verbatim-content exemption
 
-All hand-written markdown under this repository follows these rules.
-
-The following files are **intentionally exempt** because they are
-verbatim historical artifacts whose value depends on bit-for-bit fidelity
-to their source:
+These files are intentionally exempt from the authoring rules because
+their value depends on bit-for-bit fidelity to their source:
 
 - `provenance/phases/*/plan.md` -- direct copies of files in
   `~/.cursor/plans/`. Their format is determined by Cursor's plan tool.
-- `provenance/phases/*/user_prompts.md` -- verbatim user prompts from the
-  parent transcript. Wrapper formatting is updated to comply, but the
-  prompt bodies (inside the wrappers) are not edited.
+- `provenance/phases/*/user_prompts.md` -- verbatim user prompts from
+  the parent transcript. Wrapper formatting is rule-compliant; the
+  prompt bodies inside the wrappers are not edited.
 - `provenance/phases/*/assistant_responses.md` -- same convention as
   `user_prompts.md`.
 - `provenance/context/updated_AGENT_INSTRUCTIONS.md` -- direct copy of
-  `telegraf_data/AGENT_INSTRUCTIONS.md`; do not edit here, edit the
+  `../telegraf_data/AGENT_INSTRUCTIONS.md`; do not edit here, edit the
   source.
 
-If you re-run `provenance/scripts/extract_session.py`, the regenerated
-prompt / response / clarification files will use rule-compliant wrappers.
+If you re-run [`provenance/scripts/extract_session.py`](provenance/scripts/extract_session.py),
+the regenerated prompt / response / clarification files will use
+rule-compliant wrappers automatically.
+
+## Maintenance
+
+When you add a section to this file, change a pointed-at document, or
+materially change the project's scope or structure, update the
+**Last updated** date below in the same commit. Keep this file under
+about 100 lines; offload detail to the documents it points at.
+
+Last updated: 2026-05-02
