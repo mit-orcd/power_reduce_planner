@@ -1,0 +1,2 @@
+export PGPASSWORD=orcd_rw
+python run_pipeline.py --row 09 --pod A --with-reduction
