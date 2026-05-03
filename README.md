@@ -21,13 +21,33 @@ Set up a virtualenv and install the deps:
     source .venv/bin/activate
     pip install -r requirements.txt
 
-The pipeline talks to PostgreSQL via the SSH tunnel that the rest of this
-repo uses. Set the password before running:
+The pipeline talks to PostgreSQL at `127.0.0.1:5433` over an SSH tunnel
+that forwards that local port to the remote PostgreSQL server's listening
+port (typically 5432). Encode the tunnel as a stanza in `~/.ssh/config`
+so it can be brought up by alias:
 
+    Host pg-tunnel
+        HostName <internal-ssh-host>
+        User <ssh-username>
+        ProxyJump <public-login-gateway>
+        LocalForward 5433 <postgres-host>:5432
+
+Substitute real values for each `<placeholder>`. `<internal-ssh-host>`
+is the host you SSH into; it must be able to reach the PostgreSQL
+server. `<public-login-gateway>` is the bastion between your laptop and
+`<internal-ssh-host>` -- omit the `ProxyJump` line if the SSH target is
+directly reachable. `<postgres-host>:5432` is the PostgreSQL server's
+hostname and port as seen from `<internal-ssh-host>`. The local forward
+port (`5433`) must match `PG_PORT` in `config.py`.
+
+Bring the tunnel up in the background and set the database password
+before running the pipeline:
+
+    ssh -fN pg-tunnel
     export PGPASSWORD='your_password'
 
-Connection settings (`127.0.0.1:5433`, user `readonly_user`, db `timedb`)
-live in `config.py`.
+Connection settings (`127.0.0.1:5433`, user `readonly_user`, db
+`timedb`) live in `config.py`.
 
 ## Quickstart
 
