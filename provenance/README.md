@@ -25,6 +25,7 @@ The directory tree, with one-line annotations:
             updated_AGENT_INSTRUCTIONS.md    post-session spec
         scripts/
             extract_session.py               one-shot transcript extractor
+            PUBLISH_TO_GITHUB.md             gh commands to publish to mit-orcd
         phases/
             01-pipeline-bootstrap/
             02-reduction-selection/
